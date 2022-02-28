@@ -10,6 +10,16 @@ const { getUserById } = require('models/user.js')
 const user = getUserById(1) // 1 is the user id
 const nearestEvent = user.getNearestEvent() // nearest event contains the (event type, the event date, the user id)
 ```
+### The code behind the event creation: 
+```javascript
+schedule(() => [
+  {
+    from: 'registration', duration: 4, unit: 'days', action: () => {
+      // Send an e-mail
+    }
+  }
+])
+```
 
 The user's events should be compared and calculated according to multiple criteria; for example, a user can have a joining anniversary event (that should be triggered each year starting from his inscription date). 
 
@@ -37,6 +47,8 @@ We can assign different events to a user; the nearest one should be calculated u
 ## Bonus
 - A generic cache, where we can choose the provider (Memcached, Redis, files...) with just a one-line configuration for the usage. 
 - The cache should be revalidated automatically if the result has a chance. 
+- Trigger on the event's action by a cron job (You can use node-schedule, for example).
+- Find a way to delete the cron in the case of deletion. 
 
 ## Deliverability
 - The code should be delivered as a working REST API.
